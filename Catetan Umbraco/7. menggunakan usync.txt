@@ -1,0 +1,16 @@
+U Sync adalah sebuah package umbraco yang berfungsi mirip dengan version control system. di mana nantinya jika kita taro project umbraco di github, dan orang lain (developer lain) mengclone project umbraco kita maka settingan dari project kita bisa mereka gunakan. 
+
+Karena saat menggunakan umbraco settingan dan content kita akan disimpan di database, maka saat kita menggunakan usync data tersebut akan diubah dan disimpan dalam bentu xml. 
+
+
+langkah-langkah nyimpan project di uSync : 
+- pertama install dulu usync di dalam project umbraco kita -> di terminal ketik dotnet add package uSync --version 10.1.0 -> (versinya bisa beda)
+- setelah itu maka di settingan umbraco kita akan ada section baru yaitu U Sync -> di situ ada pilihan export dan import -> klik everything export(export all) -> setelah diexport maka di dalam folder project umbraco kita akan ada folder uSync yang isinya data dari project kita
+- Sampai di sini project kita sudah disimpan di dalam uSync -> sekarang tinggal kita pindahkan projectnya ke github -> sampai sini orang lain bisa mengclone project kita.
+
+langkah-langkah ngambil project umbraco dari github yang udah ada uSync:
+- clone project umbraco ke dalam komputer kita -> buka di terminal -> dan ketik dotnet run (harusnya di sini ada tulisan bahwa project tersimpan menggunakan usync)
+- buat autentikasi(email, password) untuk masuk ke project umbraco -> jika sudah masuk, ke settings -> ke section uSync -> everything lalu klik import(full import) -> dan sekarang semua konten dan settings yang ada pada project sebelumnya sudah terimport dan bisa digunakan.
+
+
+

@@ -1,0 +1,5 @@
+- kita bisa bikin custome template caranya -> bikin file php namanya template-{namaTemplate}.php -> lalu di dalem file-nya tulis syntax php -> lalu buat comment (comment css kayaknya /* */) -> isinya Template Name: {namaTemplate} -> nahh di bawah kode php ini lah yang akan jadi kode template kita -> jangan lupa tambahin header dan footer.
+- ke backoffice ke page -> pilih salah satu yang mau dikasih template -> lalu pilih template-nya di sidebar kanan -> save
+
+- selain itu kita juga bisa bikin lebih dari satu custom header, jadi jika kita suatu case di mana header (navbar) yang kita pake di setiap halaman mau kita ganti, itu bisa -> buat file baru di dalam folder custom theme kita -> namanya header-{namaHeader}.php -> lalu di dalemnya standard kita kasih tag pembuka html, head, hingga bisa juga navbar 
+- lalu di template yang mau kita kasih  kasih get_header("{namaHeader}") untuk manggil header yang berbeda dari header.php

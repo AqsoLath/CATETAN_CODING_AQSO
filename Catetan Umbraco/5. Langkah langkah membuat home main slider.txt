@@ -1,0 +1,18 @@
+Posisi Home Main Slider di sini sudah menggunakan swiper dan seluruh style nya sudah jadi
+
+
+Home Main Slider adalah sebuah slider/swiper yang isinya ada 3 yaitu Title, Subtitle dan Link(tombol)
+
+- Di document types folder elements (bisa juga dalam folder lain) -> create new pilih element -> kasih nama Home Main Slider -> lalu klik add group (jangan add tab, karena nanti di data types harus dalam bentuk group) -> kasih nama group home main slider -> add property kasih nama Home Main Slider Title -> Pilih yang TextBox lalu dibuat maksimal karakternya adalah 80 (atau berapapun yang sesuai) -> ceklis mandatory -> SUBMIT -> Ulangi langkah yang sama untuk Subtitle dan kasih nama Home Main Slider Subtitle -> Untuk yang link -> Klik add property kasih nama Home Main Slider Link -> pilih select editor yang multi url picker tapi buat maksimal diinputnya satu aja -> klik mandatory kemudian SUBMIT
+
+- Di settings data types klik titik 3 -> kemudian pilih new -> masukkan nama Nested Home Main Slider -> lalu Select Property Editor pilih yang nested Content -> klik Add Element Type -> pilih element yang sudah kita buat yaitu Home Main Slider (Jika elementnya bukan berbentuk Group maka di sini tidak bisa) -> di sini kita bisa edit minimal dan maksimal item yang harus dimasukkan -> Lalu klik SAVE
+
+- Lalu di Document type folder pages -> pilih yang Home Page -> klik add tab kasih nama Home Main Slider -> Klik Add Property masukkan nama Nested Home Main Slider -> pilih editor yang tadi sudah kita buat di data types yaitu Nested Home Main Slider ->  ceklis mandatory -> klik SUBMIT
+
+- Di Content Home -> sekarang sudah ada tab Home Main Slider -> tinggal diinput aja data yang kita ingin masukkan -> Lalu klik SAVE AND PUBLISH
+
+- Jika Semua Sudah tinggal ke settings kemudian refresh Models Builder
+
+- Di VS Code di HomePage.cshtml bagian home main slider buat pengulangan untuk Model.NestedHomeMainSlider -> di dalamnya adalah @item.HomeMainSliderTitle di dalam <h1>. @item.HomeMainSliderSubtitle di dalam <h2>. dan di dalam <a> (tombol) href nya isi dengan @item.HomeMainSliderLink.Url... (== nama-nama ini bisa beda tergantung kita masukin namanya apa di awal ==) -> SAVE
+
+lalu Home main slider sudah ada dan bisa digunakan di halaman home

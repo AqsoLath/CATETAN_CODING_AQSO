@@ -1,0 +1,4 @@
+- di dalem server azure ini ada aplikasi apa aja selain prpp website?
+- kalo lebih dari satu, kayaknya gak kuat.
+- kalo server upgrade itu ngerestart, nyalain lagi iis nya dan service (sites) di dalem iis nya yang menjalankan prpp.
+- 

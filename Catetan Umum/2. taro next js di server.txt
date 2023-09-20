@@ -1,0 +1,47 @@
+Misal masukin gor-digital ke server
+
+masukin ke github
+- Pertama project next nya harus ditaro di github -> lalu ke repsitory settings (harus akun yang buat repository nya) -> ke webhook -> klik add webhooks -> payload masukkan url jenkins kita misal https://jenkins.jenaka.co.id/github-webhook/ -> pilih yang select individual  -> pilih yang pull request sama pushes klik add webhook
+
+
+
+kamus command:
+- history : untuk list command sebelumnya (bisa buat nyontek)
+- cd : (change director) pindah folder
+- ls : (list) list apa aja yang di dalem folder
+- mkdir : (make directory) buat folder
+- nano : untuk edit file 
+
+== masukin project ke server ==
+- ke putty -> masuk ke server
+- ketik cd /home untuk ke home -> ketik ls untuk list di sini adalah folder utama di server 
+
+=hubungin dengan nginx=
+- ketik /etc/nginx
+-> ketik sites-available/ (masuk ke folder sites available) 
+-> ketik cp uat-comm.jenaka.co.id sit-gor-digital.jenaka.co.id (untuk copy yang udah ada dan buat sit-gor-digital)
+-> ketik nano sit-gor-digital.jenaka.co.id (untuk edit file sit-gor-digital) -> ganti semua yang uat-comm jadi sit-gor-digital
+-> ketik ln -s /etc/nginx/sites-available/sit-gor-digital.jenaka.co.id /etc/nginx/sites-enabled/ (untuk mindahin yang awalnya di sites-available ke sites-enabled kayaknya)
+-> ketik systemctl restart nginx (untuk restart nginx)
+-> ketik nginx -t (untuk ngetes atau ngecheck)
+ 
+=masukin project next js=
+- ketik mkdir SIT-gor-digital (untuk buat folder sit-gor-digital)
+-> ketik cd SIT-gor-digital
+-> git clone ssh://git@github.com/dev-jenaka/gor-digital-fe.git (untuk ngambil pull repo dari github)
+-> cd gor-digital-fe/ (masuk ke folder yang dari github)
+-> npm install (install package di project kita)
+-> npm run build (untuk ngebuild project kita)
+-> git pull origin main (untuk ngambil perubahan baru di repo kita)
+
+
+== jalanin di pm2 ==
+Untuk service next js kali ini bakal kita jalanin di pm2, jadi nanti proses start akan terjadi di belakang layar
+- kalau proses build sudah berhasil
+-> ketik cd /home 
+-> ketik nano port (ubah file port, port-port service apa aja yang ada di server kita) tambahin untuk yang SIT GOR Digital -> tambahin ketik 6104 SIT GOR Digital
+-> lalu ke folder gor-digital-fe 
+-> ketik pm2 start npm --name "SIT GOR DIGITAL" -- start -- --port 6104 (untuk pm2 agar ngejalanin di sini, kasih nama SIT GOR DIGITAL, dan start di port 6104)
+-> ketik pm2 save (untuk save si pm2 nya)
+- Seharusnya di sini jika benar sudah bisa buka sit-gor-digital.co.id di browser dan akan muncul project next js yang kita buat
+* saat user membuka sit-gor-digital.jenaka.co.id, user akan mengakses ke file yang ada di /etc/nginx/sites-enable/sit-gor-digital.jenaka.co.id dan di situ ada tertera port 6104, yang mana di folder gor-digital-fe kita sudah menjalankan pm2 di port 6104, oleh karena itu nginx sit-gor-digital.jenaka.co.id dan folder gor-digital-fe bisa terhubung melalui port 6104, yang jadinya bisa tampil di browser

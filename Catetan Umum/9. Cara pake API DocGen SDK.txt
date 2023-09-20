@@ -1,0 +1,20 @@
+Langkah pertama sebelum nembak api SDK docgen, kita harus dapet key Idaman untuk dimasukan ke Bearer token:
+- buka di chrome https://docgen-dev.azurewebsites.net -> masukkan email dan password akun mas rizki, (email : mk.rizki.kurniawan@pertamina.com pass: Jenaka0909$$ ) -> ke bagian Rest API download sample collection postman -> lalu import ke postman -> lau buka dan tekan Send untuk mendapat access token Bearer. (lakukan langkah ini sebelum melakukan request ke API docgen SDK
+
+Cara yang pertama pake Swagger:
+- Pertama-tama harus kita Authorize dulu -> klik tombol Authorize lalu masukan: Bearer <acces_token yang dari postman> -> lalu klik AUTHORIZE lalu close.
+- cara mengambil Semua Documents -> klik yang GET /api/documents -> klik try it out -> masukkan field RelatedId (dari client_id di postman idaman token bagian body) -> lalu klik execute,
+- Cara membuat documents -> klik yang POST /api/documents masukkan field RelatedId -> masukkan field DocumentTemplateId (document template dari document yang mau kita buat) -> Masukkan field Title (judul dari dokumen yang akan kita buat) -> masukkan field Mapping (pasangan antara tag dan value untuk dimasukkan ke document) contoh field mapping:
+ 
+[       {         "tag": "_JudulDokumen",         "type": "text",         "place": "body",         "isBold": true,         "fontSize": "32",         "value": "Dokumen Aqsha Lathif"       },       {         "tag": "_NamaEditor",         "type": "text",         "isBold": false,         "fontSize": "12",         "place": "body",         "value": "Aqso Latif"       },             {         "tag": "_TanggalBuat",         "type": "text",         "isBold": false,         "fontSize": "12",         "place": "body",         "value": "Kemaren Sore"       } ]
+
+-> Masukkan CreatedBy (data dari idaman) contoh field createdBy:
+
+{   "id": "a74a7f63-d4dc-448c-9aa4-0cd96417f520",   "email": "mk.rizki.kurniawan@pertamina.com",   "displayName": "Rizki Kurniawan" }
+-> klik execute
+
+
+Cara yang kedua adalah pake postman
+- Buka postman dan pastikan sudah ada request untuk manggil ke idaman untuk dapet Bearer token -> dan copy-kan tokennya
+- Cara ngambil semua documents -> di bawah IDAMAN Token add request -> kasih nama Get All Documents -> masukkan link api-nya: https://docgenrest-dev.azurewebsites.net/sdk_api/api/documents -> pastikan method nya adalah GET -> lalu ke tab Authorization -> pilih type nya yang Bearer -> lalu pastekan token yang dari Idaman Token -> lalu ke tab params masukkan key pertama adalah RelatedId dan value-nya adalah client_id yang dari body Idaman Token -> terakhir klik SEND
+- Cara buat documents -> buat request seperti langkah sebelumnya sampai authorization tetapi method-nya adalah POST -> lalu kita mengirimnya bukan di params tetapi di tab body, pilih yang x-www-form-urlencoded -> lalu masukkan key dan value seperti cara yang pakai swagger -> terakhir klik SEND

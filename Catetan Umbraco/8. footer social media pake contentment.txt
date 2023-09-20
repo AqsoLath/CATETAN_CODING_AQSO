@@ -1,0 +1,14 @@
+contentment adalah sebuah package umbraco yang berfungsi mengatur content yang ada di dalamnya, di sini kita pake contentment untuk membuat social media link untuk footer
+
+- pertama install contentment di dalam project umbraco kita -> di terminal ketik dotnet add package Our.Umbraco.Community.Contentment -> setelah itu maka di umbraco settings kita akan ada sebua section third party yaitu Contentment
+- di data types klik create new -> kasih nama [IconLinks] Social Icon Links -> klik Select Property -> (saat diklik maka akan muncul beberapa property yang berasal dari CONTENTMENT) -> di sini kita menggunakan yang [Contentment] Social Links (di sini kita bisa memilih socmed apa aja yang ingin ditampilkan) -> klik SAVE
+- karena social media ini ingin ditampilkan di footer setiap halaman, maka kita buatnya di dalam compositions -> create new compositions -> kasih nama Footer Properties -> add property pilih kasih nama footer social media -> select editor pilih yang tadi kita buat yaitu [IconLinks] Social Icon Links -> klik SAVE
+- Di pages Home Page  -> klik tambah Compositions pilih Footer Compositions -> klik SAVE
+- Di content home -> tab social media tambahin setiap social media yang ingin dimasukkan -> klik save
+- Jangan lupa models builder, generate model
+- di vs code di folder Partials > footer.cshtml -> ketik di bawah inherits 
+			@{
+			    var homePage = Umbraco.AssignedContentItem.AncestorOrSelf<HomePage>();
+			    var children = homePage.FooterSocialMedia ;
+			}
+-> lalu di dalam div social media buat pengulangan untuk children (children adalah data dari Footer Social Media) -> dan isi href dengan @item.Url dan di dalam class fa-@item.Name (Jika Name nya adalah facebook maka yang tampil adalah logo facebook) 

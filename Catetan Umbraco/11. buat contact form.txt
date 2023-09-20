@@ -1,0 +1,26 @@
+
+
+- Di Umbraco Forms -> di kiri, Forms klik titik 3 create empty form (form scratch) -> kasih nama Contact Form -> klik add question kasih nama nama -> chose answer type pilih yang short answer -> masukin placeholder -> ceklis mandatory -> field type pilih text -> SUBMIT 
+- add question lagi -> Ulangi langkah nya untuk email -> field type pilih yang email -> add question lagi dan sekarang untuk pesan -> pilih yang long answer -> 
+- karena kita tidak perlu mengirim formnya ke email (hanya ngirim ke Umbraco doang) -> di bawah, configure workflow -> hapus yang workflow ngirim ke email lalu klik settings di sebelah Design -> di sini bisa ganti nyesesuain beberapa yang kita butuhkan misal ganti tulisan tombol submit, kasih class ke form -> SUBMIT
+
+- Di Forms kita juga bisa kasih reCaptcha -> klik add question -> pilih yang recaptcha2 -> ceklis mandatory -> lalu Submit
+- Ke vs code nya -> ke appsettings.json -> Di dalam Umbraco masukan :
+ "Forms":  {
+      "FieldTypes": {
+        "Recaptcha2": {
+          "PrivateKey": "6LdcQs0iAAAAAIeTZb7l3-j0VJZy6yAvXqXpuyNc", ==> ataupun yang kita dapat dari google recaptcha
+          "PublicKey": "6LdcQs0iAAAAAHBwGIOsrLKeXcHrs9MklbRGmyDA"
+        }
+      }
+    }
+
+- di Settings Pages buat baru pake template -> kasih nama Contact Page -> ambil compostion yang header buat kasih title halaman -> add tab kasih nama kontak -> add property pilih yang rich text editor (pastiin bisa masukin macro) -> SAVE -> Jangan lupa generate models builder
+- lalu di Content pastikan halaman kontak sudah bisa di bawah halaman Home -> di Home pilih halaman baru dan pilih Contact Page -> kasih nama Kontak -> isi yang tab header -> Lalu di tab Kontak yang rich text editor klik yang Insert Macro (yang lambang gear) -> Choose a form -> pilih yang tadi kita buat yaitu Kontak Form -> dan Theme nya default Submit 
+- di Templates Contact page pilih template master -> Lalu di dalam kodeny masukan halaman kontak yang sudah kita buat sebelumnya -> Lalu masukan Rich text editor yang isinya suda macro yang berupa Kontak Form -> SAVE
+- Saat di halaman kontak kita saat mengisi Kontak Form dan kita pencet Submit -> hasil dari situ bisa kita lihat di Forms di dalam Contact Form -> yaitu Entries di situlah kita bisa melihat isi dari form yang diisikan oleh user
+
+- Untuk stylenya kita sesuaikan dengan class yang sudah diberikan dari Umbraco Forms nya -> oleh karena itu harus kita ubah style.css nya
+
+
+

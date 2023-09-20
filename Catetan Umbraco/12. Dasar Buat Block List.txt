@@ -1,0 +1,29 @@
+
+Perbedaan Block list dan Nested Elements (sejauh yang gw tau):
+= Block List lebih flexible dibanding nested element, dengan block list kita bisa kasih setting ke setiap inputan, bisa kasih warna background, warna icon.
+= Block list jadi kita bisa mengatur isi dari home page, satu halaman. misal ada home-bisnis, home-media dan lain2, bisa kita atur dalam satu block list ini
+
+- Di settings elements buat folder di dalam elements -> kasih nama Content Blocks -> buat lagi folder di dalamnya kasih nama Content Models
+- buat di dalamnya element baru -> kasih nama Coba Block Text -> add group kasih nama Group of Block -> add property -> kasih nama Block Text -> add property yang text box -> SAVE
+- di data types buat baru -> kasih nama [blocklist] Coba Block -> Select property pilih yang Block List -> Availables blocks add element yang sudah kita buat yaitu Coba Block Text -> Save
+- Di Pages yang mau kita kasih block list nya (di sini pake belajar home page) -> Add property kasih nama Block List -> pilih editor yang barusan kita buat yaitu [blocklist] Coba Block -> SUBMIT 
+- Jangan lupa generata models builder
+- di Content di halaman yang ada block list nya -> isi datanya dengan apa yang mau kita masukan 
+- Di vs code di dalam folder partials buat folder Components (harus persis "Components") buat file cobaBlockText.cshtml (namanya harus sesuai dengan alias element nya) -> di atas file nya tulis @inherits UmbracoViewPage<BlockListItem> -> Di bawahnya tulis
+	@{
+        	var row = (CobaBlockText)Model.Content;
+    	}
+- Untuk pake text nya di partialnya pake @row.BlockText (BlockText di sini adalah property nya)
+- di file BelajarHomePage.cshtml -> Di bagian kita mau nempelin partial nya (inget Partial itu mirip mirim sama react component) -> @Html.GetBlockListHtml(Model.BlockList) (BlockList adalah nama property yang isinya block list di dalam Settings Pages nya.
+- Lalu di file _ViewPorts.cshtml di bawah @using -> tambahin @using Umbraco.Cms.Core.Models.Blocks (Ini berfungsi agar semua file halaman seperti home.cshtml , BerlajarHomePage.cshtml bisa pake partial block)
+
+
+Karena kalo kita pake block list bisa punya lebih dari satu property di dalam block list nya, misal di sini selain menginput text kita coba biar bisa input image, caranya sama seperti buat block list yang atas tinggal diulangi, tapi di data types kita add nya dua dan pilih yang image, dan di Vs Code nya juga sama kita buat di partials yaitu <nama alias dari element>.cshtml, dan di atasnya kasih
+@inherits UmbracoViewPage<BlockListItem>
+
+@{
+    var row = (CobaBlockImage)Model.Content; //CobaBlockImage adalah nama elemennya (kayaknya)
+}
+
+Lalu cara gunain row nya adalah @row.blockImage.Url() blockImage di sini adalah nama property nya
+Kita tidak perlu masukan block Image ke file page kita, karena sudah termasuk di dalam @Html.GetBlockListHtml(Model.BlockList) ini sudah termasuk di dalamnya ada yang Image juga.

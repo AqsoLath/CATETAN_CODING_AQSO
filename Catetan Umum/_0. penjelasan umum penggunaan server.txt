@@ -1,0 +1,3 @@
+- apt adalah singkatan dari Advanced package tool yang berfungsi untuk menginstall, mengupdate, menghapus package yang ada pada server kita
+- perbedaan apt dan apt-get: sebenarnya apt hanya kependekan dari apt-get, apt-get lebih jadul
+- perintah sudo adalah sebuah perintah untuk menjalankan command sebagai root, mungkin kasus nya jika kita login bukan sebagai admin

@@ -1,0 +1,15 @@
+
+
+Posisi dotnet sudah terinstall di komputer kita
+
+- buka link psw.codeshare.co.uk -> klik option -> pilih umbraco version: (sekarang gw pake yang 10.1.0) -> uncheck starter kit -> solution file: CobaUmbraco -> project name: CobaUmbraco.site -> database: SQLlite (V10+ only) -> lalu isi nama, email dan password -> lalu klik update script.
+- setelah itu copy dan paste script yang udah kita buat ke dalam git bash di folder yang kita inginkan -> tunggu sampe install selesai
+- copy link yang ada di git bash, lalu paste di browser -> untuk masuk ke umbraconya [url yang di gitbash]/umbraco -> lalu masukkin email dan password
+
+
+
+== Konfigurasi singkat sebelum pake umbraco===
+- di appsettigns.Development.json hapus yang unattended 
+- di CobaUmbraco.site.csproj pastikan kita menggunakan versi yang 10.1.0 (Jika ingin mengganti versinya: ganti versinya lalu jalankan dotnet run di git bash nya)
+- di appsettings.json di dalam umbraco.CMS tambahin "Runtime" : {"Mode" : "Development"}, "ModelsBuilder" : {"ModelsMode": "SourceCodeManual"} (jika pake yang SourceCodeAuto akan merefresh halaman setiap ada perubahan, jika pake yang SourceCodeManual kita sendiri yang merefresh halamannya) (Ini berfungsi untuk memisahkan setiap modelnya, dan juga setiap setelah mengganti yang berhubungan dengan model kita harus mengenerate modelnya secara manual
+- Lalu jalankan dotnet run

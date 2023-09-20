@@ -1,0 +1,17 @@
+
+Ada dua cara untuk membuat dynamic navigation:
+* Cara yang pertama dengan mengambil url children dari halaman Home. jadi misal Home memiliki children berupa about, kontak, content maka ketiganya beserta urlnya akan kita masukkan ke navbar
+* Cara yang kedua dengan membuat property sendiri untuk navbarnya, jadi kita akan membuat composition navbar yang nanti kita isi semau kita apa yang ada di navbar
+
+cara pertama:
+- Di partial view navbar di bawah inherits ketik @{ var homePage = Umbraco.AssignedContentItem.AncestorOrSelf<HomePage>; berfungsi untuk mengambil data yang ada di HomePage
+- lalu di bawahnya ketik var children = homePage?.Children?.Where(x => x.IsVisible()) ?? Enumerable.Empty<IPublishedContent> } berfungsi untuk mengambil data dari children homePage yang visible
+- di dalam navbarnya di bawah home buat pengulangan untuk children yang isi dari <a> adalah @item.Name dan untuk isi hrefnya adalah @item.Url()
+-- dengan cara pertama Jika ingin menghilangkan sebuah navlist agar tidak muncul di navbar caranya -> ke umbraco settings tambahin composition namanya Visibility Properties -> add tab kasih nama visibility -> add property kasih nama Hide -> pilih yang toggle ceklis -> lalu tulisan Hide yang sebelah ikon gembok, ganti tulisannya jadi umbracoNaviHide (gak tau tulisan persisnya kayak gimana -> Lalu di setiap halaman dikasih composition visibility properties -> untuk nyembunyiinnya di Content dan tab visibility.
+
+Cara kedua:
+- Di settings tambahin Composition kasih nama Navigation List Property -> add tab kasih nama Navigation -> add property pilih yang Multi URL Picker -> Di home page tambahin composition Navigation List Property
+- DI Content Home tab navigation klik add -> Pilih semua halaman yang udah kita buat (Home, About, Contact)
+- Di partial views navbar.cshtml di bawah inherits ketik  @{ var homePage = Umbraco.AssignedContentItem.AncestorOrSelf<HomePage>; berfungsi untuk mengambil data yang ada di HomePage
+- di bawahnya ketik var children = homePage.NavigationList;
+- Di dalam navbar buat pengulangan untuk children yang isi dari <a> adalah @item.Name dan hrefnya adalah @item.Url

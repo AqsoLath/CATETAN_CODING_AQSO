@@ -1,0 +1,8 @@
+- buka server windows
+- buka ssms (sql server management system)
+- cari data base yang ingin di backup -> klik kanan -> pilih tasks -> klik backup -> klik OK
+- untuk file backupnya -> ke system C/program files/microsoft sql server/mssql15.mssqlserver/mssql/backup -> di situ ada file backup yaitu .bak yang bisa dicopy ke local.
+
+
+AMBIL BACKUPAN DATABASE
+- klik kanan di database -> new data base -> klik kanan -> tasks -> klik restor -> pilih device -> pilih file baknya -> klik OK

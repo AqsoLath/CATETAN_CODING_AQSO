@@ -1,0 +1,2 @@
+- buka filezilla -> terus cari folder website yang mau kita refresh -> cari file web.config, klik kanan -> klik edit terus pilih editor yang atas (biar milih editor manual) -> terus pilih vscode
+- pas di vscode web.config -> ke line paling bawah tambahin 1 "enter"/ atau kalo misalnya ada 1 "enter", hapus 1 "enter" itu -> terus save dan ke file zila klik save and send -> terus tunggu sampe berhasil ke kirim -> sampe sini harusnya server beserta kodenya berhasil ke-refresh.

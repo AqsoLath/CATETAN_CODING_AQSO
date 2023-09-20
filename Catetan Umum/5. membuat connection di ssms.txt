@@ -1,0 +1,17 @@
+Langkah-langkah ini berfungsi untuk membuat koneksi ke database ssms, jadi nanti kita bisa mengakses database yang di dalam ssms dari luar komputer kita
+
+- Masuk ke dalam windows server kita -> cari di windows start Sql server configuration manager -> klik
+- di kirinya cari SQL Server Network Configuration(jangan yang 32 bit) -> expand -> klik kanan di tcp/ip pilih properties -> di atasnya pilih yang ip addresses -> cari yang IPAll -> ganti yang TCP Port jadi 49172 -> apply okay
+- Lalu masih di Sql Server Network Config -> cari di kirinya Sql Server Services -> yang running-nya disable lalu enable (harus di-restart agar perubahan yang atas disimpan)
+- Lalu di windows start cari firewall pilih yang windows firewall with advanced security -> di kanan klik yang new rule -> pilih yang port -> specific local ports isi dengan 49172 -> next next next sampe yang kasih nama dan deskripsi -> kasih nama Microsoft SQL, deskripsinya bisa diisi penjelasannya (atau gak dikosongin aja) -> FINISH
+
+- Untuk ngeceknya udah bisa terhubung belum sama servernya -> di local -> buka ubuntu on windows -> ketik telnet, untuk ngetes ada telnet gak di linux ini -> lalu kalo bisa ketik telnet 45.32.101.55 49172 -> kalo gagal akan ada tulisan connection closed by foreign host, kalo berhasil gak muncul tulisan itu tapi akan stuck aja di loading
+
+**Sampai sini baru baru buka gerbang server agar bisa connect dari komputer lain, langkah selanjutnya adalah buat konfigurasi di ssms kita agar database kita bisa konek dari komputer lain
+
+
+- Buka SSMS-nya -> di kiri Ke Security, Logins klik kanan di logins klik add login -> masukan nama contoh PertaminaProcurement -> pilih yang SQL Server Auth -> Masukan Password dan ulangi -> di bawah default database pilih aja yang PertaminaProcurement (database yang udah kita buat sebelumnya, database yang akan kita jadikan default pada koneksi ini) -> klik OK
+
+
+**Sampe sini masih belum bisa nanti masih harus tanya mas zakiy dulu gimana caranya biar bisa
+- Kalo mau test bisa apa nggak, di local buka SSMS -> pas yang connect-nya masukin ip server kita dan pilih sql server auth -> masukin username dan password

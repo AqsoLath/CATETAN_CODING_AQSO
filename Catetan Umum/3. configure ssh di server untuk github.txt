@@ -1,0 +1,44 @@
+ssh adalah sebuah cara untuk server untuk berkomunikasi
+jika ingin menghubungkan github dan server kita harus menyamakan ssh yang di server dan yang di github, jika ssh tidak dihubungkan maka kita tidak bisa mengclone repository dari github
+
+
+== install git di server ==
+- Setelah kita masuk ke server
+- install git di server kita 
+-> ketik sudo apt update (untuk langkah awal sebelum menginstall sesuatu)
+-> ketik sudo apt install git-all (untuk install git di server). selain git-all ada juga git jika ingin menginstall main komponen dari git nya
+-> ketik git --version (untuk ngetes sekaligus tau versi berapa git kita)\
+
+== configure ssh git di server == 
+- setelah git terinstall
+-> ketik git config --global user.name "<nama kita>" (setting nama kita untuk git, kalo bisa yang username github)
+-> ketik git config --global user.email "<email kita>" (setting email kita untuk git, kalo bisa yang email github)
+-> ketik cd ~/.ssh (untuk pindah ke folder ssh, karena kita harus taro ssh kita di folder ssh)
+-> ketik ssh-keygen -o -t rsa -C "<email kita>" (untuk membuat ssh key, -o: openssh, -t rsa: typenya adalah rsa, -C: comment yang juga metadata)
+-> enter file in which... -> klik enter (untuk naro ssh kita di file default, yaitu id_rsa.pub)
+-> kita bisa kasih password untuk ssh kita di passphrase (bisa juga kosong) lalu klik enter
+-> di sini kita sudah berhasil membuat ssh key
+-> di folder ~/.ssh -> ketik cat id_rsa.pub (untuk melihat ssh key yang sudah kita buat)
+
+== configure ssh di github == 
+- masih di server -> di folder ~/.ssh -> ketik cat id_rsa.pub (untuk melihat ssh key yang sudah kita buat) -> lalu kita copy kan key nya
+- lalu ke github login ke akun kita -> ke settings akun -> bagian 'SSH dan GPG Keys' 
+- Klik new ssh Key -> Title: kasih nama untuk ssh kita (misal nama akun github/server kita) -> key type biarin aja -> lalu Key kita paste-kan key yang tadi sudah kita copy dari server -> KLIK Add SSH Key
+
+
+== bekerja dengan github di server ==
+- dalam langkah ini seharusnya ssh key yang ada di server dan github sudah sesuai dan terhubung
+- jika sudah, sekarang kita coba clone sebuah repo dari github kita -> ke repo yang ingin kita clone -> klik tombol Code yang berwarna hijau -> pilih yang ssh lalu kita copy
+- lalu ke server
+-> ketik cd /home (untuk masuk ke home)
+-> ketik mkdir <nama folder kita> (buat folder)
+-> ketik cd <nama folder kita> (masuk ke folder)
+-> ketik git clone <paste-kan ssh repo github yang tadi> (untuk mengclone repo dari github kita yang tadi)
+-> di sini karena kita pertama kali berhubungan dengan ssh github diminta untuk verifikasi -> tinggak ketik yes saat diminta -> dan masukan passphrase (password) jika diminta
+-> di sini jika konfigurasi ssh di server dan github kita benar maka kita sudah berhasil meng-clone repo yang dari github
+
+
+
+
+
+

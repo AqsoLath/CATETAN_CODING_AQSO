@@ -1,0 +1,12 @@
+
+- jalankan dotnet run -> lalu copy paste url yang diberikan ke browser ->
+- setelah masuk kita ke settings -> di document types kita buat 5 folder: Components, Composition, Elements, Pages
+- di dalem folder pages kita buat halaman home klik titik 3 di pages lalu create document with templates dan kasih nama Home Page (jika memilih yang with templates akan otomatis membuat template dengan nama yang sama dan menghubungkannya) -> jangan lupa ganti iconnya agar terlihat lebih baik -> SAVE
+- lalu di folder Compositions buat sebuah composition kasih nama Header Properties -> klik add tab -> add property -> pilih text string -> kasih nama title lalu klik save (jadi composition berfungsi untuk membuat property yang dapat kita panggil di setiap document type, jadi kita tidak perlu mengulang2 sebuah property di setiap halaman)
+- di Home Page klik Compositions lalu pilih composition yang udah kita buat sebelumnya -> lalu klik permissions dan ceklis allow as root -> SAVE
+- lalu ke content -> Klik titik 3 -> create item pilih yang home -> isi titlenya lalu klik save (di sini kita sudah bisa melihat halaman kita tapi masih kosong)
+- ke settings lalu klik generate models (agar inputan yang kita masukkan bisa digunakan di codenya)
+
+- setelah kita klik generate models kita bisa menggunakan inputannya di file cshtml kita dengan menulis @Model.Value.("Title") di dalam cshtml kita di bawah yang layout
+- @ di sini sebagai razor yang fungsinya menuliskan kode C# di dalam HTML kita, bisa menuliskan variabel. untuk menuliskan kode yang panjang kita bisa menuliskan @{} dan kita bisa menuliskan kode c# di dalam kurung kurawal
+selain menuliskan variabel yang kita masukkan di input, kita juga bisa memasukkan yang lainnya seperti tahun sekarang dengan menuliskan @DateTime.Now.Year atau bisa juga memasukkan halaman kita sekarang dengan menuliskan @Model.Name. Selain itu razor ini juga bisa menuliskan syntax pemrograman seperti if, for, foreach dll

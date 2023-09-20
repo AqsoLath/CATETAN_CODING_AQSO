@@ -1,0 +1,4 @@
+- pertama buka settings search windows features and and off, lalu klik -> ceklis yang .NET Framework 3.5, .NET Framework 4.8, Internet Information Servicsies (IIS) di dalem world wide web, di application development ceklis semua == (Ini belum yakin semuanya bener bisa jadi ada lagi yang kurang buat diceklisnya) ==
+- lalu klik windows cari iis manager -> di yang kiri cari folder sites -> klik kanan di folder sites pilih add website -> kasih site name -> physical path nya pilih folder root dari project umbraco kita -> type-nya http -> portnya pilih 88 (mungkin juga bisa port yang lain misal 44345 tapi jangan 87) -> klik OK
+- klik dua kali di application pools -> klik kanan di website yang udah kita buat tadi -> pilih yang advanced settings -> klik yang identity klik yang titik 3 -> built in account ganti jadi localSystem
+- ke folder sites lagi klik kanan di website yang udah kita buat -> pilih manage website -> lalu klik browse untuk liat website kita di browser. 

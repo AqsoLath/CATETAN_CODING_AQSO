@@ -1,0 +1,30 @@
+-- Master template berguna agar kita tidak perlu mengulang2 code html karena kita akan membuat template yang bisa digunakan di setiap halaman
+-- Partial Views berguna agar kita bisa menggunakan header property (contohnya title) di dalam Master template kita
+-- Alasan dibuatnya Partial views adalah karena Master template tidak mengambil spesifik model dari halaman (hanya yang public)
+jadi kita membuat partial views untuk menghubungkan header property ke master agar setiap halaman memiliki title yang berbeda
+
+*Posisi Home page sudah ada code/halaman html lengkap
+
+=== MEMBUAT MASTER TEMPLATE ===
+- Di settings template -> buat template dengan nama Master -> lalu beri RenderBody() di bawah yang ada layout 
+- yang template Home Page -> yang template pilih yang Master
+- Copy yang semua yang ada di Home page kecuali konten dari Home Page itu sendiri (Yang harus dicopy: head, navbar, footer, script)
+- lalu di Master template di antara Nav dan footer diberi RenderBody() agar isi dari halaman di bawahnya ditaro di sini
+
+Jadi di Master template isinya ada head, nav, footer dll. jadi saat kita mau buat halaman baru tidak perlu mengulang apa yang ada di Master template
+
+
+=== MEMBUAT PARTIAL VIEWS ===
+- di vscode -> di folder Partials buat file dengan nama metaData.cshtml -> cut tag <meta> dan <title> yang ada di master ke dalam metadata.cshtml
+- di metadata.cshtml di atasnya ketik @inherits UmbracoViewPage<IHeaderProperties> (HeaderProperties ini adalah composition yang isi propertynya adalah title
+- di Master Template di dalam head (di tempat yang tadi cut meta dan title) -> ketik @await Html.PartialAsync("~/Views/Partials/metaData.cshtml") . Untuk menghubungkan metaData.cshtml dengan master template.
+
+Selain digunakan agar kita bisa menggunakan title di master, Partial views juga berfungsi sebagai component yang dipecah (misal untuk membagi navigation, footer dll) kurang lebih seperti component pada REACT
+- Di folder Partials buat file dengan nama navbar.cshtml -> cut tag <nav> yang ada di master dan paste di dalam file navbar.cshtml
+- di navbar.cshtml di atasnya ketik @inherits UmbracoViewPage . tanpa <IHeaderProperties> karena ini berfungsi untuk menyambungkan dengan header properties sedangkan navbar tidak perlu
+- di master template di tempat cut nav tadi ketik @await Html.PartialAsync("~/Views/Partials/navbar.cshtml")
+maka navbar sudah ada di dalam master template 
+-ulangi langkah yang sama untuk footerr
+
+
+

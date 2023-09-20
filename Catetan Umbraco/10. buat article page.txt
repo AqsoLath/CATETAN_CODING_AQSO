@@ -1,0 +1,13 @@
+**Mungkin Ini bukan cara yang paling baik
+
+- Di settings Umbraco -> di document types > pages -> buat document with templates kasih nama article page -> pake compositions yang dibutuhkan misal header (berfungsi untuk kasih title di halaman) -> buat tab baru kasih nama article header -> tambah property pertama buat judul article (text string) -> tambah juga buat property kedua buat hero image/thumnail (single image picker) ->  Lalu tambah tab baru lagi kasih nama article content -> tambah property buat isi konten article (rich text editor, biar bisa bebas bentuk kontennya gimana) -> SAVE
+- masih di pages Home Page -> permissions -> add child pilih yang Article Page -> SAVE
+- di template Article Page -> Master template pilih yang Master
+- Jangan lupa model builder nya di generate model
+- di vs code articlePage.cshtml -> Masukin template html yang udah dibuat sebelumnya
+- Lalu di Content Home -> create baru pilih yang Article Page kasih nama samain sama kayak judul artikelnya (akan jadi url) -> di Header(compositions) kasih judul halamannya -> di tab Article Header kasih judul untuk artikelnya dan kasih gambar untuk main heronya -> di tab article Content isi rich text editornya dengan konten yang ingin dimasukkan ke dalam konten (bisa juga berupa gambar) -> SAVE
+- Di vs Code isi bagian html nya dengan yang kita masukin di Umbraco cms -> di h1 atas isi dengan judul artikel @Model.TitleArticle -> gambar di bawah judul isi url gambarnya dengan @Model.GambarHero() -> lalu di kontennya isi dengan konten yang kita isi @Model.ArticleContentRichTextEditor
+
+- Jika ingin menambah article baru tinggal ke content Home buat baru lagi pilih yang Article Page -> Lalu tinggal isi lagi aja konten yang mau dimasukkin 
+
+*Bisa diperbaiki dengan membuat Article Page tidak langsung berada di bawah Home, misal ada di bawah /article/ jadi lebih rapih 

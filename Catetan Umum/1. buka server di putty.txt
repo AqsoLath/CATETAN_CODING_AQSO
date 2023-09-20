@@ -1,0 +1,8 @@
+- Install aplikasi putty di windows untuk menjalankan server nantinya
+- buka putty, masukkan Host Name, isi dengan ip address misal 128.199.160.88 -> masukan port 22 -> pilih yang ssh -> KLIK OPEN
+- masukkan username root -> masukkan password (emang gak muncul apa2 saat ketik password)
+
+
+Cara biar bisa satu klik langsung login
+- masukkan host name (ip) seperti biasa 
+- masukkan saved session -> semacam username, misal jenaka-dev -> klik Save -> jika ingin masuk tinggal klik 2 kali username yang dibuat

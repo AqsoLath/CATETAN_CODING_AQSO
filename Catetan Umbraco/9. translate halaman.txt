@@ -1,0 +1,9 @@
+
+
+- Pertama di umbraco settings -> di section languages -> klik add language -> pilih yang indonesia -> fallback language pilih yang root (english) -> SAVE
+- di pages Home Page -> permissions -> ceklis Allow vary by culture -> SAVE
+- lalu di konten di dalem Home Page setiap property -> klik setting (logo gear) -> ceklis Allow vary by culture -> ulangi untuk semua konten yang ingin ada terjemahannya
+- Lalu di Content Home -> di atas sebelah nama ada tombol bahasa -> pilih yang tadi kita buat yaitu indonesian -> dan tinggal ganti aja bahasanya ke bahasa indonesia.
+- juga bisa displit view edit nya -> yaitu klik tombol bahasa di sebelah nama -> lalu klik open in split view -> dengan begini proses menerjemah lebih gampang dan cepat -> kalo semua sudah di terjemahkan klik SAVE
+- Kalo sudah klik kanan di Home nya (yang ada di side bar) -> pilih yang culture and Hostnames Add new domain -> untuk yang atas (yaitu yang default kalo di sini adalah english) domain nya yaitu domain root kita sendiri (https://localhost:44359/) -> lalu untuk yang bawah pilih yang indonesia dan domainnya domain root kita sendiri slash id (https://localhost:44359/id) -> SAVE
+- jika ingin lihat halaman yang sudah ditranslate buka domain root slash id (https://localhost:44359/id) maka konten dari halaman yang tadi kita udah translate sudah bisa dilihat 
