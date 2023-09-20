@@ -1,0 +1,8 @@
+==================================================================================================================
+Error: EACCES: permission denied, unlink
+cannot access /home/SIT-temenin/temenin-fe/.next/server/_error.js
+
+kemungkinan gara2 ada folder atau file yang tidak dapat izin. solve:
+- check izin dari file -> run `ls -ld <path ke folder atau file>` -> ls ini untuk list, -ld untuk list lengkap folder atau file itu sendiri -> hasilnya adalah `drwxr-xr-x 10 root root 4096 Sep 20 10:31 /home/SIT-temenin/temenin-fe/` -> ini contoh hasil yang bener -> `drwxr-xr-x` ini permission nya dan `root root` adalah pemiliknya -> HASILNYA HARUSNYA GITU kalo gak gitu harus jalanin dua cara di bawah
+- harus dikasih izin semua folder dan file di dalam folder temenin-fe untuk bisa read, write dan execute -> run: `chmod -R 755 <path ke folder atau file>` -> kalo pake -R itu ke semua folder dan file di dalamnya jadi contohnya hanya jadi `chmod -R 755 /home/SIT-temenin/temenin-fe` gak perlu sampe ke file yang dituju, ini bagus biar yakin semua file dan folder dapat izin akses yang sama. -> Kalo perlu pake sudo di depannya
+- harus disesuain izinnya agar ke root -> run `chown -R root:root <path ke folder atau file>` -> Kalo perlu pake sudo di depannya
