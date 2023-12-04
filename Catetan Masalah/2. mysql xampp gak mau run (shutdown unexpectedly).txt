@@ -1,0 +1,5 @@
+- Posisi saat mau jalanin mysql keluar error message Error: MySQL shutdown unexpectedly, tetapi Apache bisa dijalanin
+- ke folder xampp -> masuk ke folder mysql
+- copy folder data -> dan pastekan di folder mysql juga -> rename jadi data_old atau data_old#(angka) jika udah ada data_old sebelumnya
+- masuk ke folder data -> hapus folder mysql, performance_scheme, phpmyadmin, test -> pilih semua file di bawahnya KECUALI ibdata1 -> lalu hapus
+- lalu ke folder mysql > backup -> copy semua folder dan file di dalamnya (kecuali ibdata1) -> paste di folder data sebelumnya.

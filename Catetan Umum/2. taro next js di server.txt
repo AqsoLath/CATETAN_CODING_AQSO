@@ -3,6 +3,20 @@ Misal masukin gor-digital ke server
 masukin ke github
 - Pertama project next nya harus ditaro di github -> lalu ke repsitory settings (harus akun yang buat repository nya) -> ke webhook -> klik add webhooks -> payload masukkan url jenkins kita misal https://jenkins.jenaka.co.id/github-webhook/ -> pilih yang select individual  -> pilih yang pull request sama pushes klik add webhook
 
+== SETUP JENKINS ==
+- masuk ke jenkins -> new item -> kasih nama -> pilih freestyle project -> OK
+- centang discard old build -> days to keep: 7 -> max of builds: 3
+- source code management: git 
+- centang GitHub hook trigger for GITScm polling
+- klik add build step -> pilih Send files or execute commands over SSH -> SSH server name: JENAKA (tambahin di manage jenkins > configure system) 
+- di transfers masukin exec command 
+cd /home/SIT-temenin/temenin-backoffice-fe-new //==> pindah ke folder project
+git pull origin SIT //==> ngambil kode terbaru dari github
+npm i --force //==> install package
+npm run build //==> nge-build update-an terbaru
+pm2 restart "SIT-temenin-backoffice" //==> ngerestart pm2
+
+
 
 
 kamus command:
@@ -17,8 +31,8 @@ kamus command:
 - ketik cd /home untuk ke home -> ketik ls untuk list di sini adalah folder utama di server 
 
 =hubungin dengan nginx=
-- ketik /etc/nginx
--> ketik sites-available/ (masuk ke folder sites available) 
+- ketik cd /etc/nginx
+-> ketik cd sites-available/ (masuk ke folder sites available) 
 -> ketik cp uat-comm.jenaka.co.id sit-gor-digital.jenaka.co.id (untuk copy yang udah ada dan buat sit-gor-digital)
 -> ketik nano sit-gor-digital.jenaka.co.id (untuk edit file sit-gor-digital) -> ganti semua yang uat-comm jadi sit-gor-digital
 -> ketik ln -s /etc/nginx/sites-available/sit-gor-digital.jenaka.co.id /etc/nginx/sites-enabled/ (untuk mindahin yang awalnya di sites-available ke sites-enabled kayaknya)
@@ -45,3 +59,56 @@ Untuk service next js kali ini bakal kita jalanin di pm2, jadi nanti proses star
 -> ketik pm2 save (untuk save si pm2 nya)
 - Seharusnya di sini jika benar sudah bisa buka sit-gor-digital.co.id di browser dan akan muncul project next js yang kita buat
 * saat user membuka sit-gor-digital.jenaka.co.id, user akan mengakses ke file yang ada di /etc/nginx/sites-enable/sit-gor-digital.jenaka.co.id dan di situ ada tertera port 6104, yang mana di folder gor-digital-fe kita sudah menjalankan pm2 di port 6104, oleh karena itu nginx sit-gor-digital.jenaka.co.id dan folder gor-digital-fe bisa terhubung melalui port 6104, yang jadinya bisa tampil di browser
+
+
+==================================================
+=== isi file yang ada di dalem sites-available === (yang 6202 adalah port yang dipake pm2)
+==================================================
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name sit-temenin-backoffice.jenaka.co.id;
+    access_log off;
+    error_log  /var/log/nginx/sit-temenin-backoffice crit;
+
+    ssl_certificate     /etc/nginx/jenaka.certificate;
+    ssl_certificate_key /etc/nginx/jenaka.private;
+
+    location / {
+        client_max_body_size            10m;
+        client_body_buffer_size         128k;
+        proxy_send_timeout              90;
+        proxy_read_timeout              90;
+        proxy_buffer_size               128k;
+        proxy_buffers     4             256k;
+        proxy_busy_buffers_size         256k;
+        proxy_temp_file_write_size      256k;
+        proxy_connect_timeout           300s;
+
+        proxy_pass   http://localhost:6202/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header  X-NginX-Proxy true;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        rewrite ^ $request_uri;
+        rewrite ^/(.*) /$1 break;
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name  sit-temenin-backoffice.jenaka.co.id;
+
+    if ($host = sit-temenin-backoffice.jenaka.co.id) {
+        return 301 https://$host$request_uri;
+	}
+
+    return 404;
+}
+
