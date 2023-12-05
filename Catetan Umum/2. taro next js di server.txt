@@ -97,6 +97,23 @@ server {
         rewrite ^ $request_uri;
         rewrite ^/(.*) /$1 break;
     }
+	
+	# di bawah ini kalo misalnya halamannya mau pake query parameter di halamannya
+    location /event { # /event di sini adalah page/route yang mau dikasih query parameter
+        proxy_pass http://localhost:6202/event;  # 6202 adalah port, /event adalah nama routesnya
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # Capture and pass the entire query string
+        proxy_set_header X-Query-String $args;
+    }
+
+
 }
 
 server {
