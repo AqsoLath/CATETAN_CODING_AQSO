@@ -15,6 +15,7 @@ git pull origin SIT //==> ngambil kode terbaru dari github
 npm i --force //==> install package
 npm run build //==> nge-build update-an terbaru
 pm2 restart "SIT-temenin-backoffice" //==> ngerestart pm2
+- klik Save/Apply
 
 
 
@@ -35,7 +36,7 @@ kamus command:
 -> ketik cd sites-available/ (masuk ke folder sites available) 
 -> ketik cp uat-comm.jenaka.co.id sit-gor-digital.jenaka.co.id (untuk copy yang udah ada dan buat sit-gor-digital)
 -> ketik nano sit-gor-digital.jenaka.co.id (untuk edit file sit-gor-digital) -> ganti semua yang uat-comm jadi sit-gor-digital
--> ketik ln -s /etc/nginx/sites-available/sit-gor-digital.jenaka.co.id /etc/nginx/sites-enabled/ (untuk mindahin yang awalnya di sites-available ke sites-enabled kayaknya)
+-> ketik ln -s /etc/nginx/sites-available/sit-gor-digital.jenaka.co.id /etc/nginx/sites-enabled/ (untuk mindahin yang awalnya di sites-available ke sites-enabled)
 -> ketik systemctl restart nginx (untuk restart nginx)
 -> ketik nginx -t (untuk ngetes atau ngecheck)
  
@@ -53,7 +54,7 @@ kamus command:
 Untuk service next js kali ini bakal kita jalanin di pm2, jadi nanti proses start akan terjadi di belakang layar
 - kalau proses build sudah berhasil
 -> ketik cd /home 
--> ketik nano port (ubah file port, port-port service apa aja yang ada di server kita) tambahin untuk yang SIT GOR Digital -> tambahin ketik 6104 SIT GOR Digital
+-> ketik nano port (ubah file port, port-port service apa aja yang ada di server kita) tambahin untuk yang SIT GOR Digital -> tambahin ketik 6104 SIT GOR Digital (INI KAYAKNYA GAK PERLU)
 -> lalu ke folder gor-digital-fe 
 -> ketik pm2 start npm --name "SIT GOR DIGITAL" -- start -- --port 6104 (untuk pm2 agar ngejalanin di sini, kasih nama SIT GOR DIGITAL, dan start di port 6104)
 -> ketik pm2 save (untuk save si pm2 nya)

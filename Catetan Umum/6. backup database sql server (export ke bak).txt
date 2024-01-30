@@ -1,6 +1,6 @@
 - buka server windows
 - buka ssms (sql server management system)
-- cari data base yang ingin di backup -> klik kanan -> pilih tasks -> klik backup -> klik OK
+- cari data base yang ingin di backup -> klik kanan -> pilih tasks -> klik backup -> pilih media options -> ceklis overwrite all existing backup sets -> klik OK
 - untuk file backupnya -> ke system C/program files/microsoft sql server/mssql15.mssqlserver/mssql/backup -> di situ ada file backup yaitu .bak yang bisa dicopy ke local.
 
 

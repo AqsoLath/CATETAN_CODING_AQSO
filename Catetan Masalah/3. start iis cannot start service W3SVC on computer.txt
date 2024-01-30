@@ -1,0 +1,1 @@
+- buka services.msc -> cari World Wide Web Publishing Service -> klik 2x -> startup type: Manual -> OK

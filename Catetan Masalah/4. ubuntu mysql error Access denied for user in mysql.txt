@@ -1,0 +1,33 @@
+misal saat mau jalanin "sequelize db:migrate --env uat" di server keluar error kurang lebih "access denied for user in mysql". atau bisa juga saat mau buka di table plus  
+
+- masuk ke mode mysql ketik mysql -u root -p
+- ketik GRANT ALL ON sit_sakura_management.* TO 'sakura_management'@'localhost'; ==> kasih izin untuk local (local yaitu server itu sendiri)
+-> ketik GRANT ALL ON sit_sakura_management.* TO 'sakura_management'@'%'; ==> kasih izin untuk remote (jika mau diakses dari
+
+-untuk cek apakah udah bener ketik SELECT User, Host FROM mysql.user WHERE User = 'sakura_management';
+- harusnya muncul dua yang ada di bawah ini yaitu % dan localhost
++-------------------+-----------+
+| User              | Host      |
++-------------------+-----------+
+| sakura_management | %         |
+| sakura_management | localhost |
++-------------------+-----------+
+
+
+keterangan:
+- sit_sakura_management adalah nama databasenya (bisa juga * untuk ngasih izin ke semua database)
+- .* setelah nama database adalah nama table-nya (* artinya izinkan ke semua table)
+- sakura_management adalah nama user-nya
+- localhost adalah server itu sendiri
+- % adalah untuk kasih izin remote
+
+
+
+
+https://tableplus.com/blog/2019/09/access-denied-for-user-root-localhost-mysql.html
+
+
+Untuk tambahin user mysql baru
+- CREATE USER 'sakura_management'@'localhost' IDENTIFIED BY 'password';
+
+https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql

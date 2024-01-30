@@ -1,0 +1,11 @@
+=== GENERATE PUBLIC KEY DAN PRIVATE KEY ===
+- buka puttygen -> klik generate -> acak2 pola di atas -> kasih nama di key comment (misal aqso-jenaka) -> masukkan password (jika perlu) -> klik save public key (simpan di sebuah folder khusus dan kasih nama dan extension .pub) -> klik save private key (simpan di folder yang sama dengan nama yang sama gak usah pake extension) -> COPY key yang di-acak2 itu
+- Jadi public key dan private key itu bisa untuk nyambung SSH antar service, misal antara komputer lokal dan server, lokal dan database, server dan jenkins, server dan github dll.
+
+=== CONTOH NYAMBUNGIN KOMPUTER LOKAL DAN SERVER ===
+- COPY yang key acak2 itu (uang public key) -> buka putty login ke server -> ketik cd ~/.ssh -> ketik nano authorized_keys -> paste-kan yang key tadi (ditambah nama key comment, misal <key yang tadi> aqso-jenaka)
+- Jadi sekarang udah ada public key kita yang ditaro di server dan private key di local yang ibarat bakal jadi kunci untuk nyambung ke server
+
+selanjutnya adalah cara nyambung ke server pake putty tanpa masukin password, jadi langsung lewat ssh key
+- buka putty -> masukkan ip server ke hostname -> ganti nama saved sessions jadi nama server (misal Server Jenaka) -> lalu klik save dulu -> lalu ke menu Connection > Data masukkan Auto Login username: root -> lalu ke menu Connection > SSH > Auth > Credentials pilih private key dari file yang udah di-save tadi di awal lalu kembali ke menu session lalu klik save.
+- jadi sekarang kita udah nyambungin antara komputer local dan server lewat SSH Key, jadi sekarang kalo misalnya mau masuk ke server gak perlu lagi masukin user dan password server, hanya tinggal masukin password public key (apabila pake).
