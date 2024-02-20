@@ -1,0 +1,9 @@
+- Prometheus Monitoring itu semacam sebuah aplikasi atau service yang bisa kita gunakan untuk ngescrape atau ngambil data dari sebuah server, aplikasi, database, dll. Data yang dapat diambil misalnya kinerja CPU, RAM, Penyimpanan, Jaringan dll hampir semuanya bisa kita scrape pake grafana ini. Kembalian data ini lah yang kita sebut metrics
+- Fungsi Prometheus bisa untuk sistem monitoring aplikasi, alerting jika ada error pada aplikasi, pencegahan agar sebelum sistem error/down sudah diberikan peringatan lewat telegram atau slack dan masih banyak lagi
+- Prometheus bisa dipake barengan sama grafana(tampilan dashboard) biar semua yang udah kita scrape pake prometheus bisa ditampilkan lewat grafana.
+- Jadi Flow nya adalah 
+(APLIKASI YG MAU DIMONITORING)->(EXPORTER) ---> (PROMETHEUS) ---> (*diambil pake query)->(DITAMPILKAN PAKE GRAFANA) ||| 
+- Dan kalo misalnya PROMETHEUS dipecah lagi maka akan membentuk (RETRIEVAL *untuk narik data dari aplikasi) ---> (STORAGE *tempat nyimpen data) ---> (HTTP SERVER *semacam api untuk narik ke STORAGE)
+- api prometheus itu secara default biasanya punya endpoint "/metrics" yang isinya data-data dari aplikasi/service yang kita track pake promethus jadi misalnya akan dapet api http://localhost:9100/metrics 9100 di sini adalah port tempat di mana service prometheus dijalanin dan ngebalikin list metrics yang tersedia misalnya metrics untuk cpu, ram, Penyimpanan, dll. 
+- Secara default prometheus bakal ngasih kita satu url http://localhost:9090 untuk nampilin hasil scrape/monitoring kita.
+- selanjutnya adalah penjelasan konfigurasi prometheus -> konfugurasi prometheus ditaro di file prometheus.yml, mulai dari setiap berapa waktu ngescrapenya, bagian apa aja yang bakal dicek. secara default udah ada satu hal yang kita monitoring yaitu prometheus itu sendiri

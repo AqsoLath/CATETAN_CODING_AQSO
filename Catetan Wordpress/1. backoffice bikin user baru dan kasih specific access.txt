@@ -1,0 +1,44 @@
+
+
+-- Yang pertama adalah bikin role dulu untuk ngasih specific permission
+- di functions.php tambahin role baru misal contoh hr -> 
+code nya:
+function add_hr_role()
+{
+    add_role(
+        'hr',
+        'HR Department',
+        array(
+            'read'          => true,
+            'edit_posts'    => true,
+            'delete_posts'  => true,
+            'publish_posts' => true,
+            'upload_files'  => true
+        )
+    );
+}
+add_action('admin_init', 'add_hr_role', 4);
+
+-- Langkah Selanjutnya adalah rename custom post type yang mau kita kasih akses ke role specific agar bisa dipisah dengan default post type 
+- lalu ke backoffice wp > ACF > Post Types -> pilih post type (ini gw contoh adalah post type careers) -> lalu di bawah di Advanced Settings -> ke tab permissions -> ceklis Rename Capabilities -> singular capability name: career -> plural capability name: careers (inget plural capability name ini akan dipake lagi) 
+
+
+-- Langkah selanjutnya adalah kasih permission ke role tersebut untuk bisa ngapain2 aja ke sebuah post
+
+// add CPT capabilites to Role
+add_action('admin_init', 'o99_add_role_caps', 999);
+
+function o99_add_role_caps()
+{
+    $role = get_role('hr');      // ex. hr // ini adalah role yang kita buat di atas        
+    $role->add_cap('read_careers'); // careers ini adalah plural_capability yang kita declare di post type-nya. 
+    $role->add_cap('edit_careers');
+    $role->add_cap('edit_careers');
+    $role->add_cap('edit_other_careers');
+    $role->add_cap('edit_published_careers');
+    $role->add_cap('publish_careers');
+    $role->add_cap('read_private_careers');
+    $role->add_cap('delete_careers');
+}
+
+- Jadi intinya edit role hr dan kasih akses untuk akses careers dan kasih permission untuk melakukan read, edit, delete dll

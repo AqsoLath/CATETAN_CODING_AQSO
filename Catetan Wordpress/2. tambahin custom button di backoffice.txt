@@ -1,0 +1,20 @@
+Untuk nambahin custom button di dalam page detail post
+
+masukin di functions.php:
+
+
+function add_custom_button()
+{
+    global $post;
+
+    // post_type di sini adalah nama post yang mau kita masukin custom button kita. gak usah pake if kalo misalnya mau ke semua post
+    if ($post->post_type == 'sgmw-career') {
+        // di sini adalah apa yang mau kita masukin ke dalem post submit box. bisa berupa button, text ambil dari post dll.
+        echo get_field("career_info_job_details") .
+            '<div class="misc-pub-section custom-button-section">
+                <button type="button" class="button button-primary">Forward to Email</button>
+            </div>
+        ';
+    }
+}
+add_action('post_submitbox_misc_actions', 'add_custom_button');
