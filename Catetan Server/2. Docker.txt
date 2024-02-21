@@ -1,0 +1,7 @@
+- Docker adalah sebuah aplikasi/tools/service/platform yang digunakan untuk menyamakan versi OS, versi Database, versi apapun dalam sebuah komputer untuk dikirimkan ke komputer lain (bisa juga server). Jadi proses development antara server dengan developer 1 dan dengan juga developer 2 bisa sama dalam segi environment jadi kemungkinan error dikarenakan perbedaan environment komputer akan berkurang.
+- Docker memiliki 3 component utama: Dockerfile, Docker Image, dan Docker Container
+1. DOCKERFILE adalah sebuah file rancangan akan seperti apa docker image yang mau kita buat, jadi bisa dibilang ini adalah semacam kerangka/blueprint dari container yang mau kita buat
+2. DOCKER IMAGE adalah template2 untuk membuat docker container. dan image ini bisa didapet dari docker hub di mana itu adalah kumpulan image untuk ngebuat container kita, kita juga bisa ngupload docker image kita agar bisa dilihat dan dipake orang lain.
+3. DOCKER CONTAINER adalah hasil jadi dari build docker image, yang di dalamnya udah ada OS, Package-package, dependecies yang sudah disesuaikan versinya dari docker image. jadi yang kita pake adalah docker container.
+
+- Docker Compose, kalo docker compose semacam cara untuk buat Docker Platform, yang bedain adalah kalo pake docker compose lu pake file docker-compose.yml untuk mendeklarasi Container apa aja yang bakal lu pake. dan tinggal dijalanin pake command docker compose up -d

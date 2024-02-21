@@ -1,0 +1,51 @@
+Ini adalah langkah-langkah untuk jalanin prometheus di local kita pake docker compose
+- pastikan docker dan docker compose sudah terinstall di laptop kita
+- pastikan windows_exporter untuk komputer kita udah terinstall -> karena kepanjangan ini gw kasih linknya aja https://linuxhint.com/install-monitor-windows-os-prometheus/#B -> seharusnya di sini http://localhost:9182/metrics udah ada list metrics dari komputer kita
+- buat folder di mana saja misal di D -> lalu buat folder untuk menyimpan file docker-compose.yml misal "coba-prometheus" -> lalu buat di dalemnya file docker-compose.yml -> di dalem ini untuk nentuin container, bisa dibilang di sini untuk nentuin package apa aja yang bakal kita pake di dockernya -> di dalem docker-compose.yml masukin 
+====== isi docker-compose.yml ======
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus # ini adalah image untuk prometheus
+    ports:
+      - 9090:9090 # ini adalah port yang dipake untuk prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml # ini kayaknya adalah utk nentuin bagaimana config prometheusnya
+  grafana:
+    image: grafana/grafana-enterprise # ini adalah image yang dipake untuk grafana
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+     - '3000:3000' # ini adalah port yang dipake untuk grafana
+
+volumes:
+  prometheus-data:
+====== isi docker-compose.yml ======
+
+- Selanjutnya adalah di dalem file "coba-prometheus" kita buat folder prometheus -> yang di dalemnya bikin file prometheus.yml (file konfigurasi untuk prometheus) -> di dalem prometheus.yml masukin
+===== isi prometheus.yml ======
+global: # settingan global 
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+rule_files:
+  - alert.yml
+
+scrape_configs:
+  - job_name: prometheus # job untuk ngecekin prometheus itu sendiri
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - 'prometheus:9090' # port untuk ngecekin service prometheus (karena prometheusnya jalan di port 9090)
+  - job_name: 'komputer_gueh' # job untuk ngecekin komputer kita (job_name ini bisa suka2 kita namainnya apaan)
+    static_configs:
+      - targets: ['192.168.111.41:9182'] # ini ip komputer kita sebagai ip nya, dan port 9182 default yang dikasih sama windows_exporter
+===== isi prometheus.yml ======
+
+- lalu buka terminal dan diarahkan ke folder "coba-prometheus" -> dan jalankan " docker compose up -d " -> di sini kalo kita buka aplikasi docker harusnya ada dua container yang jalan yaitu grafana dan prometheus
+- untuk buka grafana nya buka di browser http://localhost:3000/ (port-nya sesuai dengan port grafana di docker-compose.yml)
+- untuk buka prometheus-nya buka di http://localhost:9090 (port-nya sesuai dengan port prometheus di docker-compose.yml)
+- di prometheus /graph bisa cari cek metrics apa yang mau kita cek dan akan keluar grafiknya.
