@@ -1,0 +1,156 @@
+- di sini posisi udah ada docker dan docker compose -> dan di sini kita pake cara mas Rio beda sama dari file 1 sama 2 sebelumnya -> kalo pake cara ini kita fokus di file2an nya doang, jadi pas sekali dijalanin "docker compose up -d" langsung jalan semuanya tanpa perlu konfigurasi banyak2 lagi
+
+yang akan kita pasang di docker-compose adalah:
+1. node-exporter: (exporter) untuk keluarin data dari komputer kita
+2. blackbox : (exporter) untuk ngambil data dari internet/google misal untuk ambil data https://prpp.pertamina.com
+3. prometheus: untuk ngumpulin data/metrics monitoring dan dikirim ke grafana
+4. grafana: untuk nampilin data kita dalam bentuk dashboard yang udah dikumpulin sama prometheus.
+
+Struktur folder yang bakal kita buat
+
+grafana-prometheus/:
+    - blackbox/:
+        blackbox.yml
+    - prometheus/:
+        prometheus.yml
+    - provisioning/:
+        - dashboards/:
+            dashboards.yaml
+        - datasources/:
+            datasources.yml
+    docker-compose.yml
+
+
+**** CATATAN: extension .yaml dan .yml gak begitu jauh bedanya, sama aja ****
+
+buat folder di mana saja misal di D -> kasih nama misal "grafana-prometheus" -> di dalemnya tambahin file docker-compose.yaml -> isi dari docker-compose.yaml:
+===== isi docker-compose.yaml =====
+version: '3'
+services:
+  prometheus: # ini untuk bikin bikin container prometheusnya
+    image: prom/prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus # ini folder di mana config-an prometheusnya
+      # - prometheus-data:/prometheus
+    networks:       
+      - localprom
+    ports:
+      - 9090:9090 # port prometheusnya
+  
+  node-exporter: # ini untuk bikin container node-exporter
+    image: prom/node-exporter
+    networks:
+      - localprom
+    ports:
+      - 9100:9100 # port untuk nampilin metrics komputer kita
+
+  blackbox: # ini untuk bikin container blackbox
+    image: prom/blackbox-exporter:latest
+    privileged: true
+    volumes:
+      - ./blackbox/blackbox.yml:/etc/blackbox_exporter/config.yml # tempat config-an blackbox
+    ports:
+      - '9115:9115' # port blackbox-nya
+    restart: unless-stopped
+  
+  grafana: # ini untuk bikin container grafana
+    image: grafana/grafana
+    volumes:
+      - ./provisioning:/etc/grafana/provisioning # tempat konfigurasi grafana, jadi pas jalanin "docker compose run -d" grafana udah ada sesuai dengan yang kita konfigurasi kayak data source dengan dashboard
+    networks:
+      - localprom
+    ports:
+      - 3000:3000 # port untuk jalanin grafana
+networks:
+  localprom:
+    driver: bridge
+===== isi docker-compose.yaml =====
+
+
+- buat folder di dalem "grafana-prometheus" namanya "blackbox" -> di dalemnya tambahin file blackbox.yml -> isi dari blackbox.yml:
+
+===== isi dari blackbox.yml ======
+
+modules:
+  http_2xx:
+    prober: http
+    http:
+      preferred_ip_protocol: "ip4"
+  http_post_2xx:
+    prober: http
+    http:
+      method: POST
+
+===== isi dari blackbox.yml ======
+
+ 
+- buat folder di dalem "grafana-prometheus" namanya prometheus -> di dalemnya tambahin file prometheus.yml -> isi dari prometheus.yml:
+
+===== isi dari prometheus.yml =====
+
+global:
+  scrape_interval: 10s
+scrape_configs:
+  - job_name: prometheus # ini untuk monitoring prometheus itu sendiri
+    static_configs:
+      - targets: # target adalah url mana yang harus kita ambil untuk dapet metrics2 (dari exporter) yang akan disimpan di prometheus
+          - prometheus:9090 # port dari prometheus
+  - job_name: node # ini untuk monitoring komputer kita lewat node-exporter
+    static_configs:
+      - targets:
+          - node-exporter:9100 # port untuk monitoring komputer kita 
+
+    # di bawah ini adalah untuk ngumpulin data website laen lewat blackbox -> api dan port-nya adalah 192.168.111.168:9115 -> tapi target url websitenya adalah yang di targets itu -> tapi gw belom persis paham ngerti kenapa bisa nyambung antara port blackbox dan url webiste, mungkin ada nyambungnya sama relabel_configs yang targets itu
+  - job_name: "jenaka.co.id"
+    # scheme: http
+    metrics_path: /probe
+    params:
+      module: [http_2xx] # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+          - https://sit-sakura-management.jenaka.co.id
+          - https://jenaka.co.id
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 192.168.111.168:9115 # The blackbox exporter's real hostname:port.
+
+===== isi dari prometheus.yml =====
+
+- selanjutnya adalah bikin konfigurasi untuk grafana -> buat folder di dalem "grafana-prometheus" namanya "provisioning"
+- pertama untuk datasource-nya dulu buat folder di dalem "provisioning" -> kasih nama "datasources" -> isi dari datasources.yml :
+
+===== isi dari datasources.yml ======
+# Ini untuk bikin data sources yang bakal ambil api url dari prometheus yang mana isinya adalah data2 yang udah dikumpulin sama prometheus
+
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus:9090
+    access: proxy
+    isDefault: true
+    editable: true # kasih true kalo misalnya mau ngijinin edit data source dari UI grafana
+
+===== isi dari datasources.yml ======
+
+- yang kedua untuk dashboard.js ***Tapi gw masih gak tau ini untuk apa, gw berharapnya ini untuk bikin dashboard dan langsung kebikin saat kita docker compose up -d tapi ternyata gak muncul dashboard apa2, mungkin ada yang salah kali yaa hehehe ajg lah***
+
+- setelah setup semua file sudah selesai selanjutnya kita jalankan docker composenya -> buka terminal arahkan ke folder root ("grafana-prometheus") -> jalankan perintah "docker compose up -d" -> cek di aplikasi docker apakah sudah running semua file tanpa masalah
+- sampai sini kalo misalnya bener semua udah bisa:
+1. buka prometheus: http://localhost:9090 untuk liat data apa aja yang udah kita dapat dari exporter
+2. buka blackbox: http://localhost:9115/probe(atau)metrics untuk liat metrics dari internet/google.com
+3. buka node exporter: http://localhost:9100/metrics untuk liat metrics dari komputer kita
+4. buka grafana: http://localhost:3000 untuk nampilin data dan di page datasource harusnya udah ada datasource prometheus yang udah kita declare di file datasources.yml
+
+- selanjutnya adalah langkah bikin dashboard di grafana dari data source yang udah kita buat
+- isi dari dashboard adalah:
+1. panel: isinya adalah grafis bisa berupa angka, chart garis, atau table.
+2. row: kumpulan dari beberapa panel yang bisa juga dibilang sebagai sebuah grup nya lah.
+- buka grafana di http://localhost:3000 -> login user:admin | password:admin -> kalo mau buat password baru bisa, atau skip juga bisa
+- ada dua cara untuk bikin dashboard, bikin manual dan import dashboard
+- BIKIN MANUAL -> masuk ke page dashboard -> click create dashboard -> add visualization -> pilih prometheus (yang udah kita buat data source sebelumnya) -> di sini adalah tampilan untuk bikin panel pertama -> di bagian kiri atas adalah tampilan bagaimana bentuk panel saat kita terapkan -> di bagian kiri bawah adalah untuk mengatur query/sumber data nya dari mana. (untuk mengatur metrics) -> bagian kanan adalah option-option panel, misal untuk mengatur bentuk panel kita seperti apa (grafis batang, lingkaran, table, angka), mengatur warna, satuan.
+- IMPORT DASHBOARD -> masuk ke page dashboard -> click import dashboard -> di sini bisa import berupa file json, atau masukin id dashboard yang bisa dapet dari https://grafana.com/grafana/dashboards/ -> lalu pilih datasource yang mau kita sangkutin di dashboardnya -> kalo misalnya udah bener data dari datasource udah bisa ditampilkan oleh dashboard grafana
