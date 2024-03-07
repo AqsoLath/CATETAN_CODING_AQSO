@@ -1,0 +1,13 @@
+- Port forwarding merupakan proses menyambungkan port antara dua komputer, bisa local ke remote atau bisa juga remote ke local.
+- jadi cara kerjanya adalah di local kita menjalankan service tertentu misal expressJS di port 6000 dan membuka sambungan port ke server, dan diterima di server dengan port yang berbeda misal diterima di server di port 9000, jadi sekarang di server port 9000 akan menjalankan service berupa expressJS yang disimpan di local komputer kita.
+
+=== Port Forwarding Local ke Server Pake User Root  ===
+- buka cmd -> lalu ketikan "ssh -R 9000:localhost:6000 root@128.199.160.83" 
+- 9000: SERVER, port yang diterima server.
+- 6000: LOCAL, port local di mana service itu dijalanin
+
+=== Port Forwarding Local ke Server Pake Private dan Public Key  ===
+- kalo misalnya pake puttyGen pastikan udah tergenerate dulu .pub dan .ppk nya, yang .pub ditaro di server di file authorized keys (cek caranya di catetan umum/10) -> berarti di sini public key kita udah tertanem di server
+- selanjutnya kita perlu convert .ppk tadi menjadi private key openSSH -> buka putty -> load file .ppk yang mau di convert -> di tab atas bagian conversion pilih Export OpenSSH Key -> kasih nama  -> simpan di tempat yang aman, bisa juga dibarengin sama .pub dan .ppk sebelumnya
+- lalu buka cmd arahkan ke lokasi di mana file private key itu disimpan -> lalu jalankan perintah "ssh -R 9000:localhost:6000 -i aqso-jenaka root@128.199.160.83" (aqso-jenaka adalah private key dari OpenSSH tadi)
+- Kalo misalnya ada error message file are too open, permission denied bla bla bla, itu gara2 akses ke filenya itu belom bener -> buka cmd arahkan di folder yang ada key nya itu lalu jalankan "icacls aqso-jenaka /inheritance:r /grant:r "[username_laptop]:R""
