@@ -1,0 +1,23 @@
+link youtube: https://www.youtube.com/watch?v=XvwX-hmYv0E
+
+tambahan cara gw sendiri: copy file ini dari folder C:\Windows\System32 pastekan ke dalam "build\windows\runner\Release\" 
+- msvcp140.dll
+- msvcp140d.dll
+- ucrtbased.dll
+- vcruntime140.dll
+- vcruntime140_1.dll
+- vcruntime140_1d.dll
+- vcruntime140d.dll
+(sebenarnya ini gak wajib, yang penting file2 ini bisa juga dimasukin ke dalam iss-nya )
+
+
+- Pertama harus download dan install app inno Setup Compiler
+- buka project flutter yang mau dijadiin exe tambahin satu folder installers untuk nyimpan hasil exe dan iss script
+- buka folder project flutter -> buka cmd -> jalanin flutter build windows -> hasil buildnya ada di dalem build\windows\runner\Release
+- buka aplikasi inno setup compiler (iss) -> pilih yang create a new script file using the Script wizard -> gausah ceklis new empty script -> 
+-> Kasih Application Name misal: Flutter Desktop App -> Application version: 1.0 -> Application publisher: (isi aja) -> application website (isi aja) -> NEXT
+-> Application folder name: (kasih aja) misal FlutterDesktopApp -> NEXT
+-> selanjutnya adalah tahap yang paling penting, kita pilihin .exe, .dll, folder data, yang akan dimasukan ke dalam exe build kita nantinya (.exe yang dipilih dan .exe hasil build beda)
+-> Application main executable file: pilih file di dalem "build\windows\runner\Release\" yang exe nya misal flutter_desktop.exe -> lalu di bawahnya bagian file dan folder -> klik add folder -> pilih folder "data" di dalem "build\windows\runner\Release\" -> selanjutnya klik add file -> di sini pilih semua file .dll di dalem "build\windows\runner\Release\" (bisa aja gausah file dll yang di atas) -> kalo udah semuanya dimasukin NEXT
+-> uncheck Associate a file type to the main executable -> next-next-next sampe Compiler Settings -> Custom Output folder: pilih folder installers yang udah kita buat di awal -> Compiler output base file: misal flutter_desktop_app_01 -> bisa juga masukin icon (harus file .ico) -> NEXT NEXT NEXT dan FINISH
+-> compile script now: yes -> save the script file: yes -> taro di folder installers dan kasih nama misal : flutter_desktop_app_01 -> 
