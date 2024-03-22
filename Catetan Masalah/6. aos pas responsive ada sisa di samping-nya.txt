@@ -1,0 +1,11 @@
+jadi ini permasalahan di aos kalo misalnya pake fade-right dan dibuka diresponsive, itu bakal ada sisa kosong di sebelah kanan layar
+- solusinya kasih overflow-x:hidden di pembungkus dari tag yang ada aos nya
+misal:
+<div class="girls-container container" style="overflow-x: hidden">
+     <div class="gambar" data-aos="fade-left" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out-quint">
+            <img src="<?php echo get_template_directory_uri() ?>/assets/images/players-girls/nella-1.png" alt="nella 1">
+     </div>
+     <div class="konten" data-aos="fade-left" data-aos-delay="250" data-aos-anchor=".girls .gambar" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out-quint">
+            <h2>Girls</h2>
+     </div>
+</div>
