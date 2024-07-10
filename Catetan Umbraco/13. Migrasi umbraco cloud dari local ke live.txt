@@ -8,4 +8,6 @@
 - untuk mindahin content ke umbraco cloud adalah -> buka backoffice local terus pilih page/content mana yang mau dimigrasi -> klik kanan -> pilih yang Queue for transfer -> klik Queue - klik open tranfer queue -> dan klik transfer to live.
 - kalo banyak yang mau dimigrasi, biar gak usah transfer to live terus2an bisa kita queue dulu banyak2 kontennya, jadi pas open transfer queue akan sekalian banyak yang ditransfernya.
 - sebenernya kita bisa pindahin langsung sekaligus semua-muanya, di content terus klik kanan terus queue for transfer. tapi kalo gini langsung mindahin semua seabrek-abrek, takutnya ada konten yang di live yang ilang. makanya mending satu-satu aja dipilihin.
-- Untuk medai, sama aja sama kayak yang content. cuma bedanya dia bisa milih filenya mau dipindahin juga atau kagak, tapi biasanya gw cuma mindahin foldernya aja.
+- Untuk media, sama aja sama kayak yang content. cuma bedanya dia bisa milih filenya mau dipindahin juga atau kagak, tapi biasanya gw cuma mindahin foldernya aja.
+
+- harusnya sampe sini perubahan-perubahan yang ada di local beserta backoffice udah dipindahin semua ke live. Tapi untuk mastiin kita juga perlu cek secara manual apa emang udah pindah semua.
