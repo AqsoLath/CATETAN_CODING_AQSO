@@ -1,0 +1,17 @@
+muncul error Value cannot be null. Parameter name: source
+terus semua front-end gak bisa dibuka, dan backoffice pun error
+
+ini gara2 database nya rusak.
+
+buka file database-nya di sini /umbraco/Data/Umbraco.sqlite.db
+
+terus buka pake aplikasi SQLite,
+
+- dan jalankan SELECT * FROM [umbracoAccess] LEFT JOIN [umbracoAccessRule] ON [umbracoAccess].[id] = [umbracoAccessRule].[accessId] ORDER BY ([umbracoAccess].[nodeId])
+intinya ini untuk ambil semua record di table umbracoAccess
+
+- lalu cari yang row-nya ada null-nya, ingetin id nya
+
+- dan setelahnya kita harus hapus record yang itu.
+
+- terus jalanin lagi dotnet run

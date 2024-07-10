@@ -1,0 +1,8 @@
+- jalanin systemctl restart php8.0-fpm (8.0 ini bisa disesuain dengan versi php yang ada)
+- jalanin systemctl restart nginx
+
+seharusnya dengan 2 command ini udah bisa jalan lagi, cuma kadang php fpm itu ada beberapa versi yang ada.
+- caranya ketik cd /etc/php lalu ketik ls
+- di situ kita liat ada berapa versi kalo ada dua maka kita perlu restart keduanya
+- lalu kalo udah jalanin lagi systemctl restart nginx
+- harusnya sampe sini udah bisa jalan lagi website wordpress-nya

@@ -1,0 +1,11 @@
+- Ini posisinya pake umbraco cloud sebagai environment dan kita clone project di local
+- sebaiknya kita catat perubahan apa aja yang kita lakukan di umbraco backoffice, jadi kita enak ngeceknya
+
+- pertama buka backoffice local -> ke settings -> ke menu deploy -> jalankan operasi "Update Umbraco Schema From Data Files" abis itu jalanin "Export Schema To Data Files" -> Kalo udah seharusnya di sini posisinya di GitHub desktop kita kalo kita liat akan ada beberapa perubahan pada file UDA(file yang isinya perubahan di backoffice) -> tapi ini gak pasti 100% ada, kadang2 UDA udah tergenerate otomatis -> ini cuma Langkah pencegahan aja.
+- terus buka GitHub desktop dan commit push perubahan kita ke branch master atau branch utamanya apapun itu (biasanya master) -> tunggu beberapa saat emang kadang lama buat push ke umbraco cloud.
+- saat kita cek di backoffice live, seharusnya di ini perubahan-perubahan udah berhasil, tapi cuma bagian type aja, kayak missal template, document type, data type, member type itu udah pada pindah semua. yang belom pindah adalah yang sifatnya content. kayak di section Contents dan juga di media (file-file dan folder belom pindah)
+
+- untuk mindahin content ke umbraco cloud adalah -> buka backoffice local terus pilih page/content mana yang mau dimigrasi -> klik kanan -> pilih yang Queue for transfer -> klik Queue - klik open tranfer queue -> dan klik transfer to live.
+- kalo banyak yang mau dimigrasi, biar gak usah transfer to live terus2an bisa kita queue dulu banyak2 kontennya, jadi pas open transfer queue akan sekalian banyak yang ditransfernya.
+- sebenernya kita bisa pindahin langsung sekaligus semua-muanya, di content terus klik kanan terus queue for transfer. tapi kalo gini langsung mindahin semua seabrek-abrek, takutnya ada konten yang di live yang ilang. makanya mending satu-satu aja dipilihin.
+- Untuk medai, sama aja sama kayak yang content. cuma bedanya dia bisa milih filenya mau dipindahin juga atau kagak, tapi biasanya gw cuma mindahin foldernya aja.

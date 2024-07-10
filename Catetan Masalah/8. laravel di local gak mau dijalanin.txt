@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/75285913/badmethodcallexception-method-illuminate-foundation-applicationshare-does-not#comment136440756_76061239
+
+https://santrikoding.com/tutorial-laravel-10-2-install-dan-menjalankan-laravel-10
+
+https://www.youtube.com/watch?v=Uto36GI6HIg

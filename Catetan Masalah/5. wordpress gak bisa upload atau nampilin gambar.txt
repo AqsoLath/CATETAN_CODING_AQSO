@@ -1,0 +1,2 @@
+- jadi di kalo misalnya pake custom theme dia pas upload gambar ada muncul error, tapi gambar tetep masuk ke dalam folder uploads. Dan di page media gak tampil gambar, cuma muter2 aja
+- ini bug konyol caranya: di page functions.php di atas tag php jangan ada apa2, kalo error sebelumnya itu ada tag comment html.
