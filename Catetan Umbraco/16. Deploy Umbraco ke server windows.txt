@@ -1,0 +1,12 @@
+- pastikan ada bacpac file
+- jalankan bacpac file di ssms, (import tier data application)
+- install Umbraco.Templates
+- bikin umbraco baru umbraco 10.3.1
+- di appsettings.json ubah connection string-nya
+"ConnectionStrings": {
+    "umbracoDbDSN": "Server=localhost\\SQLEXPRESS;Database=evisitor;Integrated Security=true",
+    "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+  }
+
+sesuaikan Database= dengan nama database-nya
+copy kan file-file lainnya views, controller, models, js, css dll

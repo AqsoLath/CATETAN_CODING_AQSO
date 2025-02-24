@@ -1,0 +1,25 @@
+ini untuk ngambil umbraco cloud jadi ke local tapi local-nya create new umbraco bukan clone dari umbraco cloud:
+*pertama kita install project umbraco baru di local kita: 
+https://docs.umbraco.com/umbraco-cms/fundamentals/setup/install/install-umbraco-with-templates
+- install umbraco template kalo misalnya belum: "dotnet new install Umbraco.Templates"
+- create new umbraco project "dotnet new umbraco --name <nama projek> --version 10.1.0" versinya bisa disesuaikan. untuk umbraco 10, harus punya dotnet 6.
+- lalu jalankan umbraco dengan "dotnet run"
+- buka localhost berapa yang dijalanin -> tunggu instalasi selesai -> pas milih database pilih aja SQLite
+- lalu kita download package usync - "dotnet add package uSync --version 10.1.0"
+- ubah di file projectsettings.csproj (file kayaknya) -> ubah dotnet jadi 6
+
+*lalu di cloningan umbraco cloud. -> ini adalah project yang akan kita duplikat ke umbraco baru
+- CATATAN: cloningan di sini harus bener-bener baru -> bisa kita clone baru dari umbraco cloud agar datanya paling update dari sana dan tidak ada data sampah yang dari local
+- copy paste kan dari cloningan umbraco ke umbraco baru yaitu folder wwwroot, views, controllers, models
+- dan di local ini juga install Usync -> *CATATAN PENTING*: Usync di sini jangan di-push ke production karena umbraco cloud gak bisa pake usync
+- usync jalankan export everything -> tunggu -> lalu simpan folder usync yang berisi semua settingan dan configurasi dari umbraco -> ini adalah yang akan kita pindahkan ke umbraco baru.
+
+*gabungkan keduanya
+- copy pastekan file startup.cs dan program.cs
+- di umbraco baru sesuaikan URL api agar ke localhost dia sendiri
+- copy pastekan folder usync -> dan jalankan import everything di umbraco baru.
+
+Harusnya sampai sini data yang ada di cloningan umbraco akan ada di umbraco baru
+yang tidak tercover usync: 
+- members (buat login admin panel)
+- Admin (buat login umbraco)

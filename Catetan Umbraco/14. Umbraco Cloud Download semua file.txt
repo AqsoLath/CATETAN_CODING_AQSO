@@ -1,0 +1,5 @@
+source: https://docs.umbraco.com/umbraco-cloud/set-up/media/connect-to-azure-storage-explorer
+
+- pertama kita harus ada aplikasi Microsoft azure storage explorer, download dulu
+- buka s1.umbraco.com -> ke bagian connections -> cari yang Blob Storage Connection Details -> yang bagian SAS copy -> ini adalah SAS URL
+- selanjutnya buka azure storage -> klik yang lambang colokan -> pilih yang Blob Container -> lalu yang SAS -> pastekan SAS URL di bagian Blob Container SAS URL -> lalu klik connect -> di folder media ini adalah semua file di umbraco cloud kita disimpan

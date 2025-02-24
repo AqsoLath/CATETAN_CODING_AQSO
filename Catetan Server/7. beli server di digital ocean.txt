@@ -1,0 +1,13 @@
+- di atas klik Create -> Droplets
+- settingan yang gw lakuin (Anyboard server PROD - ALPHA):
+	- region: Singapore
+	- OS: Ubuntu
+	- Version: 24.04 (LTS) 64x
+	- Droplet Type: Basic
+	- CPU Options: Premium AMD
+	- Pilih spec yang: RAM 8GB, 4 AMD CPU, 160GB NVME SSD
+	- Backups: Weekly Backup
+	- Authentication Method SSH Key, pake SSH KEY JENAKA-MASTER
+	- Add Improved metrics = Checklis 
+	- Hostname: ALPHA
+	- Tags: PROD

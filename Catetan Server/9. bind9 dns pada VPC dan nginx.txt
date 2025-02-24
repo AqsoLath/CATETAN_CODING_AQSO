@@ -1,0 +1,112 @@
+- Bind9 adalah sebuah service di ubuntu yang bertindak sebagai DNS System, atau yang untuk ngatur-ngatur DNS. Bind9 bisa diinstall pake docker-composer
+- DNS adalah Domain name server, yang kurang lebih adalah untuk ngatur-ngatur apabila domain dimasukkan pada browser maka akan diarahkan ke mana
+- pada digital ocean kita bisa menggunakan VPC (Virtual Private Cloud), yang kurang lebih adalah membuat beberapa droplet/server yang ada menjadi satu network private. settingannya ada di digital ocean -> network -> VPC
+- Nginx adalah tools pada ubuntu yang bisa digunakan untuk berbagai macam kebutuhan, web server, load balancer, reverse proxy
+
+- === pada infrastuktur server anyboard ===
+- punya beberapa server: VPN, Alpha, Beta, dll. 
+- Setiap server ini disambungkan lewat VPC pada settingan digital ocean, agar menjadi satu network private
+- Lalu di server VPN dipasangkan Bind9, untuk ngatur2 agar bisa akses service2 di server lain lewat domain local (.loc)
+- 
+
+Settingan Bind 9:
+
+=== named.conf ===
+acl internal {
+  172.17.0.0/16;
+  172.21.0.0/16;
+  127.0.0.1;
+  localhost;
+  localnets;
+};
+
+options {
+  forwarders {
+    8.8.8.8;
+    8.8.4.4;
+  };
+  allow-query { internal; };
+};
+
+zone "anyanalytics.loc" IN {
+  type master;
+  file "/etc/bind/anyanalytics.loc.zone";
+};
+
+zone "anyserver.loc" IN {
+  type master;
+  file "/etc/bind/anyserver.loc.zone";
+};
+
+=== END named.conf ===
+
+- Kurang lebih arti di atas adalah, gw punya domain Utama anyserver.loc, yang mana menggunakan file anyserver.loc.zone sebagai file settingan DNS-nya. sisa kode di atasnya gw kurang tahu buat apa hehe
+
+=== anyserver.loc.zone ===
+$TTL 2d
+$ORIGIN anyserver.loc.
+
+@           IN      SOA     ns1.anyserver.loc admin.anyserver.loc (
+                                20230218                ; serial number
+                                3600                    ; refresh period
+                                600                     ; retry period
+                                604800                  ; expire time
+                                1800                    ; negative TTL
+                              )
+@           IN      NS      ns1.anyserver.loc.
+
+ns1            IN      A       172.21.0.253
+@              IN      A       172.17.0.1
+vpn            IN      A       10.104.0.2
+alpha          IN      A       10.104.0.5
+db             IN      A       10.104.0.5
+es             IN      A       10.104.0.5
+anyanalytics   IN      A       10.104.0.5
+prometheus     IN      A       10.104.0.5
+beta           IN      A       10.104.0.6
+
+=== END anyserver.loc.zone ===
+
+- lalu di atas ini adalah settingan lebih detail-nya terkait sub domain nya
+- yang di kiri itu kayak vpn, alpha, db, es adalah sub domain dari domain anyserver.loc (jadi alpha.anyserver.loc)
+- ip-ip itu adalah domain private dari server-server yang ada dari digital ocean
+
+- Selanjutnya adalah settingan pada nginx, kita juga perlu agar mengarahkan domain beta.anyserver.loc ke local port yang berjalan pada server itu
+
+=== beta.anyserver.loc ===
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name  beta.anyserver.loc;
+    access_log   off;
+    error_log    off;
+    root         /var/www/html;
+
+    location  / {
+        client_max_body_size        10m;
+        client_body_buffer_size     128k;
+        proxy_send_timeout          90;
+        proxy_read_timeout          90;
+        proxy_buffer_size           128k;
+        proxy_buffers     4         256k;
+        proxy_busy_buffers_size     256k;
+        proxy_temp_file_write_size  256k;
+        proxy_connect_timeout       300s;
+
+        proxy_set_header  Host $host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_hide_header X-Frame-Options;
+
+        proxy_pass   http://localhost:9100/;
+    }
+}
+
+=== END beta.anyserver.loc ===
+
+- server_name di sini adalah beta.anyserver.loc, sama kayak settingan bind9-nya
+- Jadi secara flow, Ketika sebuah computer menggunakan VPN (open VPN) untuk ke server VPN flownya adalah akan diterima oleh Bind9 bahwa domain tersebut punya ip 10.106.0.6 (server BETA) -> kemudian di server BETA sudah ada nginx untuk mengarahkan domain tersebut (yang sama kayak bind9) ke local port localhost:9100 -> dan dari local port ini sudah berjalan sebuah service, dalam kasus ini node-exporter
+- Intinya Ketika dari laptop membuka beta.anyserver.loc, adalah service node-exporter di server BETA.
+
+ 

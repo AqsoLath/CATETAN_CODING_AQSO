@@ -1,4 +1,4 @@
-- Prometheus Monitoring itu semacam sebuah aplikasi atau service yang bisa kita gunakan untuk ngescrape atau ngambil data dari sebuah server, aplikasi, database, dll. Data yang dapat diambil misalnya kinerja CPU, RAM, Penyimpanan, Jaringan dll hampir semuanya bisa kita scrape pake grafana ini. Kembalian data ini lah yang kita sebut metrics
+- Prometheus Monitoring itu semacam sebuah aplikasi atau service yang bisa kita gunakan untuk ngescrape atau ngambil data dari sebuah server, aplikasi, database, dll. Data yang dapat diambil misalnya kinerja CPU, RAM, Penyimpanan, Jaringan dll hampir semuanya bisa kita scrape pake prometheus ini. Kembalian data ini lah yang kita sebut metrics
 - Fungsi Prometheus bisa untuk sistem monitoring aplikasi, alerting jika ada error pada aplikasi, pencegahan agar sebelum sistem error/down sudah diberikan peringatan lewat telegram atau slack dan masih banyak lagi
 - Prometheus bisa dipake barengan sama grafana(tampilan dashboard) biar semua yang udah kita scrape pake prometheus bisa ditampilkan lewat grafana.
 - Jadi Flow nya adalah 

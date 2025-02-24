@@ -1,0 +1,49 @@
+Pertama yang harus diinstall adalah docker-nya dulu
+- ini di folder mana aja, di /home lebih bagus
+- jalanin sudo apt update . ini untuk cek update installan
+- jalanin sudo apt install apt-transport-https ca-certificates curl software-properties-common . ini untuk install hal-hal yang perlu diinstall nya
+- jalanin curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
+- jalanin sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+- jalanin sudo apt install docker-ce
+- jalanin  docker --version . buat cek apakah docker udah berhasil ke-install
+- jalanin systemctl start docker . buat jalanin docker-nya
+
+Kalo docker udah diintall selanjutnya install docker-compose
+- jalanin sudo curl -L "https://github.com/docker/compose/releases/download/v2.19.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+- jalanin sudo chmod +x /usr/local/bin/docker-compose
+- di tahap ini docker-compose --version udah bisa jalan
+
+
+Selanjutnya kita bisa gunain docker-compose buat jalanin service, misalkan ini kita install elastic-search
+- pindah ke folder cd /home -> lalu buat folder elastic-search . lalu cd elastic-search
+- copy paste kan docker-compose.yml yang berisi konfigurasi elastic-search:
+======= isi docker-compose.yml =============
+
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    user: "1000"
+    container_name: elastic-search
+    networks:
+      elastic:
+        ipv4_address: 172.24.0.2
+    volumes:
+        - /home/elastic-search/data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+
+networks:
+  elastic:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.24.0.0/16
+          gateway: 172.24.0.1
+======= isi docker-compose.yml =============
+
+- lalu jalankan docker-compose up -d . ini untuk jalanin docker compose-nya
+- jalanin docker ps untuk check service apa aja yang jalan
+- jalanin sudo chown -R 1000:1000 data . ini kalo docker ps masih kosong kemungkinan karena error saat start docker compose-nya. "data" ini adalah folder, jadi harus ada di folder yang ada data-nya.
+- pada tahap ini harusnya docker dan docker-compose udah terinstall dan sudah berhasil menjalankan elastic-search
